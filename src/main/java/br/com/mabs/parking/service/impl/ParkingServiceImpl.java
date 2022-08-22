@@ -4,6 +4,7 @@ import br.com.mabs.parking.model.Parking;
 import br.com.mabs.parking.service.ParkingService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,12 +12,6 @@ import java.util.stream.Collectors;
 public class ParkingServiceImpl implements ParkingService {
 
     private static Map<String, Parking> parkingMap = new HashMap();
-
-    static {
-        var id  = getUUID();
-        Parking parking = new Parking(id, "ABC-1234", "SC", "CELTA", "PRETO");
-        parkingMap.put(id, parking);
-    }
 
     //generating ID like a Hashcode
     private static String getUUID() {
@@ -29,8 +24,12 @@ public class ParkingServiceImpl implements ParkingService {
     }
 
     @Override
-    public Parking create() {
-        return null;
+    public Parking create(Parking parkingCreate) {
+        String uuid = getUUID();
+        parkingCreate.setId(uuid);
+        parkingCreate.setEntryDate(LocalDateTime.now());
+        parkingMap.put(uuid, parkingCreate);
+        return parkingCreate;
     }
 
     @Override
@@ -39,12 +38,13 @@ public class ParkingServiceImpl implements ParkingService {
     }
 
     @Override
-    public Parking findById(Long id) {
-        return null;
+    public Parking findById(String id) {
+        return parkingMap.get(id) ;
     }
 
     @Override
     public Parking deleteById(Long id) {
         return null;
     }
+
 }

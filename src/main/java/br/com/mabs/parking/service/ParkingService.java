@@ -7,9 +7,9 @@ import java.util.List;
 public interface ParkingService {
 
     List<Parking> findAll();
-    Parking create();
+    Parking create(Parking parkingCreate);
     Parking update(Parking parking);
-    Parking findById(Long id);
+    Parking findById(String id);
     Parking deleteById(Long id);
 
 }
